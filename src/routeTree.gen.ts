@@ -11,10 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as CreateTableImport } from './routes/create-table'
 import { Route as IndexImport } from './routes/index'
 import { Route as TableTableImport } from './routes/table/$table'
 
 // Create/Update Routes
+
+const CreateTableRoute = CreateTableImport.update({
+  id: '/create-table',
+  path: '/create-table',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -39,6 +46,13 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/create-table': {
+      id: '/create-table'
+      path: '/create-table'
+      fullPath: '/create-table'
+      preLoaderRoute: typeof CreateTableImport
+      parentRoute: typeof rootRoute
+    }
     '/table/$table': {
       id: '/table/$table'
       path: '/table/$table'
@@ -53,36 +67,41 @@ declare module '@tanstack/solid-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create-table': typeof CreateTableRoute
   '/table/$table': typeof TableTableRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create-table': typeof CreateTableRoute
   '/table/$table': typeof TableTableRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/create-table': typeof CreateTableRoute
   '/table/$table': typeof TableTableRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/table/$table'
+  fullPaths: '/' | '/create-table' | '/table/$table'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/table/$table'
-  id: '__root__' | '/' | '/table/$table'
+  to: '/' | '/create-table' | '/table/$table'
+  id: '__root__' | '/' | '/create-table' | '/table/$table'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreateTableRoute: typeof CreateTableRoute
   TableTableRoute: typeof TableTableRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreateTableRoute: CreateTableRoute,
   TableTableRoute: TableTableRoute,
 }
 
@@ -97,11 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/create-table",
         "/table/$table"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/create-table": {
+      "filePath": "create-table.tsx"
     },
     "/table/$table": {
       "filePath": "table/$table.tsx"

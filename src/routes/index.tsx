@@ -1,9 +1,7 @@
-import { createFileRoute } from "@tanstack/solid-router";
-import { onMount } from "solid-js";
+import { createFileRoute, Link } from "@tanstack/solid-router";
 import { useSchema, useSqlite } from "~/components/contexts/sqlite.context";
 import { Control } from "~/components/control";
 import { Mermaid } from "~/components/mermaid";
-import logo from "../logo.svg";
 
 export const Route = createFileRoute("/")({
   component: IndexComponent,
@@ -15,6 +13,9 @@ function IndexComponent() {
 
   return (
     <div class="text-center">
+      <Link from="/" to="/create-table">
+        Create Table
+      </Link>
       <button
         onClick={() => {
           sqlite().exec(

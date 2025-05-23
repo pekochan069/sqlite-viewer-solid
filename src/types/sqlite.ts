@@ -5,6 +5,10 @@ export type Field = {
   type: FieldType;
   isPrimary: boolean;
   isForeign: boolean;
+  isUnique: boolean;
+  isNullable: boolean;
+  defaultValue: string;
+  autoIncrement: boolean;
 };
 
 export type ForeignKey = {
